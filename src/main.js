@@ -8,6 +8,11 @@ const get_engine = () => globalThis.XkinEngine;
 
 const $types = atom([]);
 
+const JSX_GLOBALS = `
+declare const h: any;
+declare const Fragment: any;
+`;
+
 const VOID_RE = /(<(?:area|base|br|col|embed|hr|img|input|link|meta|param|source|track|wbr)\b[^>]*?)(?<!\/)>/gi;
 
 const html_to_jsx = (html, { strip_br = false } = {}) => {
@@ -143,6 +148,10 @@ class Xkin {
 
     monaco.languages.typescript.typescriptDefaults.setCompilerOptions(compilerOpts);
     monaco.languages.typescript.javascriptDefaults.setCompilerOptions(compilerOpts);
+
+    // Inject global h/Fragment so TSX/JSX never errors on the pragma
+    monaco.languages.typescript.typescriptDefaults.addExtraLib(JSX_GLOBALS, "file:///xkin-jsx-globals.d.ts");
+    monaco.languages.typescript.javascriptDefaults.addExtraLib(JSX_GLOBALS, "file:///xkin-jsx-globals.d.ts");
 
     // Use a .tsx/.jsx URI so Monaco enables JSX support
     const ext = { typescript: "tsx", javascript: "jsx" }[language] || language;
