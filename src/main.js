@@ -112,6 +112,16 @@ const sync_types = (libs) => {
   }
 };
 
+const toVNode = (node, symbols, h) => {
+  if (typeof node === "string") return node;
+
+  const { tag, props, children } = node;
+  const component = symbols[tag] ?? tag;
+  const childVNodes = children.map((c) => toVNode(c, symbols, h));
+
+  return h(component, props, ...childVNodes);
+};
+
 /* ── Initialize modules ───────────────────────────── */
 
 class Xkin {
@@ -306,6 +316,13 @@ class Xkin {
 
   static get engine() {
     return get_engine();
+  }
+
+  static render_mdx(tree, symbols = {}) {
+    const { h, renderToString } = get_engine();
+    const children = tree.children.map((c) => toVNode(c, symbols, h));
+    const vdom = h("div", tree.props, ...children);
+    return renderToString(vdom);
   }
 
   /* ── Styles ─────────────────────────────────────── */

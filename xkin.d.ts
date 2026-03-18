@@ -105,9 +105,24 @@ declare namespace Xkin {
   }
 
   interface MdxResult {
-    tree: any;
+    tree: MdxTree;
     symbols: string[];
   }
+
+  /* ── MDX Renderer ──────────────────────────────── */
+
+  type MdxNode = string | {
+    tag: string;
+    props: Record<string, any>;
+    children: MdxNode[];
+  };
+
+  interface MdxTree {
+    props: Record<string, any>;
+    children: MdxNode[];
+  }
+
+  type SymbolMap = Record<string, (props: any) => any>;
 
   /* ── Style Args ─────────────────────────────────── */
 
@@ -189,6 +204,7 @@ declare var Xkin: {
 
   // Engine (Preact)
   readonly engine: Xkin.Engine;
+  render_mdx(tree: Xkin.MdxTree, symbols?: Xkin.SymbolMap): string;
 
   // Styles
   sass(args: Xkin.SassArgs): Promise<Xkin.SassResult>;
