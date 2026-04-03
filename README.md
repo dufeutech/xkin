@@ -181,7 +181,23 @@ Convert Markdown to HTML via Showdown.
 ```js
 const html = Xkin.markdown({
   source: "# Hello\n\nThis is **bold** text.",
-  options: { tables: true, ghCodeBlocks: true },
+  options: {
+    ghCodeBlocks: true,
+    ghCompatibleHeaderId: true,
+    ghMentions: true,
+    ghMentionsLink: "https://github.com/{u}",
+    tables: true,
+    tasklists: true,
+    strikethrough: true,
+    simplifiedAutoLink: true,
+    excludeTrailingPunctuationFromURLs: true,
+    literalMidWordUnderscores: true,
+    simpleLineBreaks: true,
+    requireSpaceBeforeHeadingText: true,
+    openLinksInNewWindow: true,
+    backslashEscapesHTMLTags: true,
+    emoji: true,
+  },
 });
 ```
 
