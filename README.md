@@ -5,7 +5,7 @@ Browser-ready bundles for Monaco Editor, Babel, Prettier, SASS, CSSO, Terser & S
 ## Install
 
 ```bash
-npm install xkin
+npm install @dufeut/xkin
 ```
 
 ## Usage
